@@ -1,6 +1,14 @@
 {
+    "name" : "server/api-symfony",
+    "description": "API du portfolio",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Falla Enzo",
+            "email": "enzo.falla.1506@gmail.com"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {

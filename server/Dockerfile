@@ -9,7 +9,7 @@ COPY . .
 
 # RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-RUN chown -R www-data:www-data /var/www/html/var
+# RUN chown -R www-data:www-data /var/www/html/var
 
 EXPOSE 80
 

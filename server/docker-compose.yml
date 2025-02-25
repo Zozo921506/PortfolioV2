@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  symfony:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_DATABASE: portfolio
+      MYSQL_PASSWORD: tf-rK4a3
+      MYSQL_USER: Zozo921506

@@ -2,14 +2,18 @@ version: '3'
 
 services:
   symfony:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: PHP
     ports:
-      - "80:80"
+      - "8000:8000"
     volumes:
       - .:/var/www/html
 
   db:
     image: mysql:8.0
+    container_name: DB
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
       MYSQL_DATABASE: portfolio

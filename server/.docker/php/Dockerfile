@@ -28,7 +28,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 RUN chown -R www-data:www-data /var/www/html
 
-RUN chmod -R 775 /var/www/html/var
+# RUN chmod -R 775 /var/www/html/var
 
 EXPOSE 80
 

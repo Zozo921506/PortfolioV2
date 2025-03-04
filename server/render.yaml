@@ -1,28 +1,14 @@
 services:
-  - name: symfony-backend
-    type: web
+  - type: web
+    name: symfony-app
     env: docker
     plan: free
     dockerfilePath: .docker/php/Dockerfile
     envVars:
       - key: APP_ENV
         value: prod
+      - key: APP_DEBUG
+        value: false
       - key: DATABASE_URL
-        fromDatabase:
-          name: symfony-db
-          property: connectionString
-
-  - name: symfony-nginx
-    type: web
-    env: docker
-    plan: free
-    dockerfilePath: .docker/nginx/Dockerfile
-    envVars:
-      - key: BACKEND_URL
-        value: http://symfony-backend:9000
-
-  - name: symfony-db
-    type: postgres
-    plan: free
-    databaseName: symfony
-    user: symfony
+        sync: false
+    healthCheckPath: /

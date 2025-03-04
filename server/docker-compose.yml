@@ -8,29 +8,19 @@ services:
     container_name: symfony_php
     volumes:
       - .:/var/www/html
-    environment:
-      - APP_ENV=dev
+      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - "80:80"
     depends_on:
       - database
-
-  nginx:
-    image: nginx:alpine
-    container_name: symfony_nginx
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - php
-
   database:
     image: mysql:8.0
     container_name: symfony_db
     environment:
-      MYSQL_DATABASE: portfolio
-      MYSQL_USER: Zozo921506
-      MYSQL_PASSWORD: tf-rK4a3
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
     ports:
       - "3306:3306"
     volumes:

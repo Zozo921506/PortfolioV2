@@ -3,7 +3,7 @@ services:
     name: symfony-app
     env: docker
     plan: free
-    dockerfilePath: .docker/php/Dockerfile
+    dockerfilePath: Dockerfile
     envVars:
       - key: APP_ENV
         value: prod

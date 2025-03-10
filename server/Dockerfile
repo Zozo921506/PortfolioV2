@@ -25,7 +25,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts && \
-    ls -l /var/www/html/vendor
+    cat /var/www/html/vendor/autoload_runtime.php
 
 RUN chown -R www-data:www-data /var/www/html
 

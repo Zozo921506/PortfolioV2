@@ -24,7 +24,9 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+RUN composer install
+
+RUN composer dump-autoload
 
 RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
     chown -R www-data:www-data /var/www/html/var && \

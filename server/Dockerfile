@@ -26,8 +26,6 @@ COPY . /var/www/html
 
 RUN composer install
 
-RUN composer dump-autoload
-
 RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
     chown -R www-data:www-data /var/www/html/var && \
     chmod -R 775 /var/www/html/var

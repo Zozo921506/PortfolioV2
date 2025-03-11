@@ -1,5 +1,5 @@
 {
-    "name" : "server/api-symfony",
+    "name": "server/api-symfony",
     "description": "API du portfolio",
     "type": "project",
     "license": "MIT",

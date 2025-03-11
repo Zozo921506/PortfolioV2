@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: symfony-app
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: false
+      - key: DATABASE_URL
+        sync: false
+    healthCheckPath: /

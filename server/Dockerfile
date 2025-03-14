@@ -26,6 +26,8 @@ COPY . /var/www/html
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+ENV APP_ENV=prod
+ENV APP_DEBBUG=0
 
 RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
     chown -R www-data:www-data /var/www/html/var && \

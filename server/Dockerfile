@@ -15,7 +15,9 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction && ls -la vendor/
+
+RUN composer dump-autoload
 
 ENV APP_ENV=prod
 

@@ -7,21 +7,21 @@ services:
       dockerfile: Dockerfile
     container_name: symfony_php
     volumes:
-      - /var/www/html/vendor
       - ./var:/var/www/html/var
       - ./apache.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - "80:80"
     depends_on:
       - database
+
   database:
     image: mysql:8.0
     container_name: symfony_db
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
     ports:
       - "3306:3306"
     volumes:

@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: symfony_php
+    env_file:
+      - .env
     volumes:
       - ./var:/var/www/html/var
       - ./apache.conf:/etc/apache2/sites-available/000-default.conf

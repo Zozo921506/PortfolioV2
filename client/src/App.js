@@ -56,7 +56,7 @@ function App() {
       {screenTitle ? (
         <div id='mainscreen-container'>
           <nav>
-            <img src='./Image/shiona.png' alt='Shiona' id='mainscreen-image'></img>
+            <img src='./Image/Falla_Enzo_pic.png' alt='Profil' id='mainscreen-image'></img>
             <p>Falla Enzo</p>
           </nav>
           <div className='mainscreen'>
@@ -77,7 +77,7 @@ function App() {
                 <button onClick={(e) => screenTittleButton(e)} id='accueil'>Accueil</button>
                 <button onClick={(e) => projectsButton(e)}>Projets</button>
                 <button onClick={(e) => contactButton(e)}>Contact</button>
-                <img src='./Image/shiona.png' alt='Shiona' className='footer-image'></img>
+                <img src='./Image/Falla_Enzo_pic.png' alt='Profil' className='footer-image'></img>
                 <p className="footer-name">Falla Enzo</p>
               </footer>
             </>
@@ -88,7 +88,7 @@ function App() {
                 <button onClick={(e) => screenTittleButton(e)} id='accueil'>Accueil</button>
                 <button onClick={(e) => profileButton(e)}>Profil</button>
                 <button onClick={(e) => contactButton(e)}>Contact</button>
-                <img src='./Image/shiona.png' alt='Shiona' className='footer-image'></img>
+                <img src='./Image/Falla_Enzo_pic.png' alt='Profil' className='footer-image'></img>
                 <p className="footer-name">Falla Enzo</p>
               </footer>
             </>
@@ -99,7 +99,7 @@ function App() {
               <button onClick={(e) => screenTittleButton(e)} id='accueil'>Accueil</button>
               <button onClick={(e) => profileButton(e)}>Profil</button>
               <button onClick={(e) => projectsButton(e)}>Projets</button>
-              <img src='./Image/shiona.png' alt='Shiona' className='footer-image'></img>
+              <img src='./Image/Falla_Enzo_pic.png' alt='Profil' className='footer-image'></img>
               <p className="footer-name">Falla Enzo</p>
             </footer>
           </>

@@ -23,6 +23,8 @@ ENV APP_DEBUG=0
 
 RUN echo "APP_ENV=prod\nAPP_DEBUG=0" > /var/www/html/.env.prod.local
 
+ENV APP_ENV=prod
+ENV APP_DEBBUG=0
 
 RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
     chown -R www-data:www-data /var/www/html/var && \

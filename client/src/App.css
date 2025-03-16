@@ -176,7 +176,7 @@ form div textarea
 .footer-image
 {
   width: 65px;
-  height: auto;
+  height: 65px;
 }
 
 #mainscreen-image
@@ -222,7 +222,7 @@ form div textarea
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
 }
 
 .grid-skills
@@ -246,7 +246,8 @@ form div textarea
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  align-items: center
+  align-items: center;
+  margin-bottom: 25%;
 }
 
 .profile-hobbies
@@ -425,6 +426,7 @@ form div textarea
   .footer-image
   {
     width: 100px;
+    height: 100px;
   }
 
   #mainscreen-image
@@ -603,6 +605,7 @@ form div textarea
   .footer-image
   {
     width: 175px;
+    height: 175px;
   }
 
   #profil-top

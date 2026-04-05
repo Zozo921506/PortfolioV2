@@ -42,7 +42,7 @@ final class ProjectsController extends AbstractController
         $project->setUpdatedAt(new \DateTimeImmutable('now'));
         $entity->persist($project);
         $entity->flush();
-        return new JsonResponse(['status' => 'Projet ajouté'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Project added'], Response::HTTP_CREATED);
     }
 
     #[Route('/api/projects/{id}', methods: ['DELETE'])]

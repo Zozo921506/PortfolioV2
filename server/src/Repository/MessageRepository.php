@@ -31,13 +31,12 @@ class MessageRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Message
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findByProjectId(int $projectId): array
+    {
+        $connect = $this->getEntityManager()->getConnection();
+        $query = "SELECT message.id, user.firstname, user.lastname, message.text FROM message LEFT OUTER JOIN user ON user.id = message.id_user WHERE message.id_project = ?";
+        $prepare = $connect->prepare($query);
+        $result = $prepare->executeQuery([$projectId]);
+        return $result->fetchAllAssociative();
+    }
 }

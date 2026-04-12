@@ -35,6 +35,11 @@ final class MessageController extends AbstractController
         return new JsonResponse(['status' => 'Message created', 'id' => $message->getId()], Response::HTTP_CREATED);
     }
 
+    public function getProjectMessage(int $id, MessageRepository $messageRepository) {
+        $messages = $messageRepository->findByProjectId($id);
+        return new JsonResponse(['status' => 'Messages collected', 'messages' => $messages]);
+    }
+
     #[Route('/api/message/{id}', methods: ['DELETE'])]
     public function removeMessage(Request $request, EntityManagerInterface $entity, MessageRepository $repository, $id): Response
     {

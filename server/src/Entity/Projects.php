@@ -19,6 +19,7 @@ use ArrayObject;
 #[ORM\Entity]
 #[ApiResource(
     normalizationContext: ['groups' => ['project:read']],
+    denormalizationContext: ['groups' => ['project:write']],
     inputFormats: ['multipart' => ['multipart/form-data']],
     operations:[
         new GetCollection(),
@@ -101,14 +102,15 @@ class Projects
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['project:read'])]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $name = null;
     
     #[ORM\Column(length: 255)]
-    #[Groups(['project:read'])]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $imagePath = null;
 
     #[Vich\UploadableField(mapping: 'projects', fileNameProperty: 'imagePath')]
+    #[Groups(['project:write'])]
     #[Assert\File(
         maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
@@ -117,11 +119,11 @@ class Projects
     private ?File $file = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups(['project:read'])]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $description = null;
 
     #[ORM\Column(type: 'array')]
-    #[Groups(['project:read'])]
+    #[Groups(['project:read', 'project:write'])]
     private ?array $languages = [];
 
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]

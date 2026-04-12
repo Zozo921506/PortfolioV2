@@ -22,9 +22,17 @@ final class UserController extends AbstractController
     {
         $email = $request->request->get('email');
         $password = $request->request->get('password');
+
+        $email = trim($email);
+        $password = trim($password);
+
         if (!isset($email) || !isset($password))
         {
             return new JsonResponse(['error' => 'Email and password are required'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new JsonResponse(['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST);
         }
 
         try
@@ -46,6 +54,7 @@ final class UserController extends AbstractController
         }
 
         $token = $jwtManager->create($user);
+        $token = "Bearer ". $token;
         return new JsonResponse(['token' => $token], Response::HTTP_OK);
     }
 
@@ -56,33 +65,42 @@ final class UserController extends AbstractController
         $password = $request->request->get('password');
         $firstname = $request->request->get('firstname');
         $lastname = $request->request->get('lastname');
-        if (!isset($email) || !isset($password))
+
+        $email = trim($email);
+        $password = trim($password);
+        $firstname = trim($firstname);
+        $lastname = trim($lastname);
+
+        if(!isset($email) || $email === '')
         {
-            return new JsonResponse(['error' => 'Email and password are required'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'Email is required'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new JsonResponse(['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if(!isset($password) || $password === '') {
+            return new JsonResponse(['error' => 'Password is required'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if(!isset($firstname) || $firstname === '') {
+            return new JsonResponse(['error' => 'Firstname is required'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if(!isset($lastname) || $lastname === '') {
+            return new JsonResponse(['error' => 'Lastname is required'], Response::HTTP_BAD_REQUEST);
         }
 
         $user = new User();
         // return new JsonResponse(['test' => $user->getId()]);
         $user->setEmail($email);
         $user->setRoles(['ROLE_USER']);
-        if (isset($firstname) && $firstname !== "") {
-            $user->setFirstname($firstname);
-        } else {
-            $user->setFirstname('Invité');
-        }
-
-        $user->setLastname('tmp');
+        $user->setFirstname($firstname);
+        $user->setLastname($lastname);
         $user->setPassword($passwordHasher->hashPassword($user, $password));
         $entity->persist($user);
         $entity->flush();
-        if (isset($lastname) && $lastname !== "") {
-            $user->setLastname($lastname);
-            $entity->flush();
-        } else {
-            $id = $user->getId();
-            $user->setLastname('#'.$id);
-            $entity->flush();
-        }
 
         return new JsonResponse(['message' => 'User created'], Response::HTTP_CREATED);
     }

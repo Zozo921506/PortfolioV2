@@ -5,6 +5,8 @@ function Project() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [search, setSearch] = useState("");
   const [errorApi, setErrorApi] = useState(false);
+  const [detailsProject, setDetailsProject] = useState(true);
+  const [messages, setMessages] = useState([]);
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -67,6 +69,46 @@ function Project() {
       getProjects();
     }
   }, [errorApi]);
+
+  const setDisplayDetailsToTrue = (e) => {
+    e.preventDefault();
+    // console.log("details project = true");
+    setDetailsProject(true);
+  }
+
+  const setDisplayMessage = async (e, projectId) => {
+    e.preventDefault();
+    const url =`http://localhost:8000/api/getProjectMessage/${projectId}`;
+    try {
+      const response = await fetch(url, {
+          method: 'GET'
+        });
+
+        if (response.ok)
+        {
+          const data = await response.json();
+          console.log(data.messages);
+          if (data.messages.length > 0)
+          {
+            setDetailsProject(false);
+            setMessages(data.messages);
+          }
+        }
+        else
+        {
+          console.log("Une erreur est survenue");
+        }
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const setChangeProject = (project) => {
+    setSelectedProject(project);
+    setDetailsProject(true);
+  }
+
   return (
     <div className='project-container'>
         <div className='display-project'>
@@ -76,14 +118,36 @@ function Project() {
                 {selectedProject ? (
                 <>
                   <img src={selectedProject.imageURL} alt={selectedProject.name} className='selected-pic'></img>
-                  <h4>Titre: {selectedProject.name}</h4>
-                  <p><strong>Description:</strong> {selectedProject.description}</p>
-                  <div className='project-languages'>
-                    <p><strong>Langages: </strong></p>
-                    {selectedProject.languages.map((language) => (
-                      <p key={language}>{language}</p>
-                    ))}
+                  <div>
+                    <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
+                    <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
                   </div>
+                  {detailsProject ? (
+                    <>
+                      <h4>Titre: {selectedProject.name}</h4>
+                      <p><strong>Description:</strong> {selectedProject.description}</p>
+                      <div className='project-languages'>
+                        <p><strong>Langages: </strong></p>
+                        {selectedProject.languages.map((language) => (
+                          <p key={language}>{language}</p>
+                        ))}
+                      </div>
+                    </> 
+                  ) : (
+                    <>
+                      {messages.length > 0 ? (
+                        messages.map(message => {
+                            return <div key={message.id}>
+                              <p><strong>{message.firstname} {message.lastname}</strong> <span>{message.text}</span></p>
+                            </div>
+                          })
+                      ) : (
+                        <>
+                          <p>Ce projet n'a pas de messages</p>
+                        </>
+                      )}
+                    </>
+                  )}
                 </>
               ) : (
                 <p>Sélectionnez un projet pour voir les détails</p>
@@ -93,16 +157,39 @@ function Project() {
                   {selectedProject ? (
                   <>
                     <img src={`https://vps-48914820.vps.ovh.net${selectedProject.imageUrl}`} alt={selectedProject.name} className='selected-pic'></img>
-                    <h4>Titre: {selectedProject.name}</h4>
-                    <p><strong>Description:</strong> {selectedProject.description}</p>
-                    <div className='project-languages'>
-                      <p><strong>Langages: </strong></p>
-                      {selectedProject.languages.map((language) => (
-                        <p key={language}>{language}</p>
-                      ))}
+                    <div>
+                      <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
+                      <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
                     </div>
-                    <p><strong>Ajouté: </strong>{formatDate(selectedProject.created_at)}</p>
-                    <p><strong>Dernière modification: </strong>{formatDate(selectedProject.updated_at)}</p>
+                    {detailsProject ? (
+                      <>
+                        <h4>Titre: {selectedProject.name}</h4>
+                        <p><strong>Description:</strong> {selectedProject.description}</p>
+                        <div className='project-languages'>
+                          <p><strong>Langages: </strong></p>
+                          {selectedProject.languages.map((language) => (
+                            <p key={language}>{language}</p>
+                          ))}
+                        </div>
+                        <p><strong>Ajouté: </strong>{formatDate(selectedProject.created_at)}</p>
+                        <p><strong>Dernière modification: </strong>{formatDate(selectedProject.updated_at)}</p>
+                      </>
+                    ) : (
+                      <>
+                        {messages.length > 0 ? (
+                          messages.map(message => {
+                              return <div key={message.id}>
+                                <p>{message.firstname} {message.lastname} <span>{message.text}</span></p>
+                              </div>
+                            })
+                        ) : (
+                          <>
+                            <p>Ce projet n'a pas de messages</p>
+                          </>
+                        )}
+                      </>
+                    )}
+                    
                   </>
                 ) : (
                   <p>Sélectionnez un projet pour voir les détails</p>
@@ -119,7 +206,7 @@ function Project() {
                     {filteredProjects.length > 0 ? (
                       <>
                         {filteredProjects.map((project) => {
-                          return <div key={project.id} className='project' onClick={() => setSelectedProject(project)}>
+                          return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
                             <img src={project.imageURL} alt={project.name} className='project-pic'></img>
                             <div className='project-value'>
                                 <p className='project-name'>{project.name}</p>
@@ -140,7 +227,7 @@ function Project() {
                 ) : (
                   <>
                     {displayProjects ? displayProjects.map((project) => {
-                    return <div key={project.id} className='project' onClick={() => setSelectedProject(project)}>
+                    return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
                         <img src={project.imageURL} alt={project.name} className='project-pic'></img>
                         <div className='project-value'>
                             <p className='project-name'>{project.name}</p>
@@ -164,7 +251,7 @@ function Project() {
                       {filteredProjects.length > 0 ? (
                         <>
                           {filteredProjects.map((project) => {
-                            return <div key={project.id} className='project' onClick={() => setSelectedProject(project)}>
+                            return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
                               <img src={`https://vps-48914820.vps.ovh.net${project.imageUrl}`} alt={project.name} className='project-pic'></img>
                               <div className='project-value'>
                                   <p className='project-name'>{project.name}</p>
@@ -185,7 +272,7 @@ function Project() {
                   ) : (
                     <>
                       {displayProjects ? displayProjects.map((project) => {
-                      return <div key={project.id} className='project' onClick={() => setSelectedProject(project)}>
+                      return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
                           <img src={`https://vps-48914820.vps.ovh.net${project.imageUrl}`} alt={project.name} className='project-pic'></img>
                           <div className='project-value'>
                               <p className='project-name'>{project.name}</p>

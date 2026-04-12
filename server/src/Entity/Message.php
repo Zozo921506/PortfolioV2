@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
 use App\Controller\MessageController;
@@ -16,7 +17,12 @@ use ArrayObject;
 #[ApiResource(
     normalizationContext: ['groups' => ['Message:read']],
     operations:[
-        new GetCollection(),
+        new GetCollection(
+            uriTemplate: '/getProjectMessage/{id}',
+            controller: MessageController::class . '::getProjectMessage',
+            read: false,
+            normalizationContext: ['groups' => ['Message:read']],
+        ),
         new Post(
             uriTemplate: '/new_message',
             controller: MessageController::class. '::newMessage',

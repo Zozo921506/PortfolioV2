@@ -118,7 +118,7 @@ function Project() {
                 {selectedProject ? (
                 <>
                   <img src={selectedProject.imageURL} alt={selectedProject.name} className='selected-pic'></img>
-                  <div>
+                  <div className="project-buttons">
                     <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
                     <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
                   </div>
@@ -135,17 +135,20 @@ function Project() {
                     </> 
                   ) : (
                     <>
-                      {messages.length > 0 ? (
-                        messages.map(message => {
-                            return <div key={message.id}>
-                              <p><strong>{message.firstname} {message.lastname}</strong> <span>{message.text}</span></p>
-                            </div>
-                          })
-                      ) : (
-                        <>
-                          <p>Ce projet n'a pas de messages</p>
-                        </>
-                      )}
+                      <div className="messages-container"> 
+                        {messages.length > 0 ? ( messages.map((message) => ( 
+                          <div className="message" key={message.id}> 
+                            <p><strong>{message.firstname} {message.lastname}</strong></p> 
+                            <p>{message.text}</p> 
+                          </div>
+                        )) ) : ( 
+                          <p>Ce projet n'a pas de messages</p> 
+                        )} 
+                      </div>
+                      <form>
+                        <input type='text' placeholder='Nouveau Meassage'></input>
+                        <button type='submit'>Envoyer</button>
+                      </form>
                     </>
                   )}
                 </>
@@ -157,7 +160,7 @@ function Project() {
                   {selectedProject ? (
                   <>
                     <img src={`https://vps-48914820.vps.ovh.net${selectedProject.imageUrl}`} alt={selectedProject.name} className='selected-pic'></img>
-                    <div>
+                    <div className="project-buttons">
                       <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
                       <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
                     </div>
@@ -176,17 +179,20 @@ function Project() {
                       </>
                     ) : (
                       <>
-                        {messages.length > 0 ? (
-                          messages.map(message => {
-                              return <div key={message.id}>
-                                <p>{message.firstname} {message.lastname} <span>{message.text}</span></p>
-                              </div>
-                            })
-                        ) : (
-                          <>
-                            <p>Ce projet n'a pas de messages</p>
-                          </>
-                        )}
+                        <div className="messages-container"> 
+                          {messages.length > 0 ? ( messages.map((message) => ( 
+                            <div className="message" key={message.id}> 
+                              <p><strong>{message.firstname} {message.lastname}</strong></p> 
+                              <p>{message.text}</p> 
+                            </div>
+                          )) ) : ( 
+                            <p>Ce projet n'a pas de messages</p> 
+                          )} 
+                        </div>
+                        <form className='message_form'>
+                          <input type='text' placeholder='Nouveau Message'></input>
+                          <button type='button'>Envoyer</button>
+                        </form>
                       </>
                     )}
                     

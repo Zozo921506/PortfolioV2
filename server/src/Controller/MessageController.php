@@ -21,13 +21,17 @@ final class MessageController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
-        if (!$request->request->get('idProject') || !$request->request->get('content')) {
+
+        $data = json_decode($request->getContent(), true);
+        $idProject = $data['idProject'] ?? null;
+        $content = $data['content'] ?? null;
+        if (!$idProject || !$content) {
             return new JsonResponse(['error' => 'Missing fields'], Response::HTTP_BAD_REQUEST);
         }
 
         $message = new Message();
-        $message->setIdProject($request->request->get('idProject'));
-        $message->setText($request->request->get('content'));
+        $message->setIdProject($idProject);
+        $message->setText($content);
         $message->setIdUser($user->getId());
         $message->setCreatedAt(new \DateTimeImmutable('now'));
         $entity->persist($message);

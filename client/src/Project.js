@@ -9,6 +9,7 @@ function Project() {
   const [messages, setMessages] = useState([]);
   const [token, setToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [content, setContent] = useState("");
 
 
   const formatDate = (dateString) => {
@@ -24,6 +25,10 @@ function Project() {
   const inputChange = (e) =>
   {
     setSearch(e.target.value);
+  }
+
+  const contentChange = (e) => {
+    setContent(e.target.value);
   }
 
   useEffect(() => {
@@ -117,23 +122,32 @@ function Project() {
     setDetailsProject(true);
   }
 
-  // const newMessage = async (e, projectId) => {
-  //   e.preventDefault();
-  //   const url = `http://localhost:8000/api/new_message`;
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'POST', 
-  //       headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${token}`
-  //       },
+  const newMessage = async (e, projectId) => {
+    e.preventDefault();
+    const url = `http://localhost:8000/api/new_message`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
 
-  //       // body: 
-  //     })
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
+        body: JSON.stringify({
+          content: content,
+          idProject: projectId
+        })
+      })
+
+      if (response.ok) {
+        console.log("Message envoyé avec succès");
+        alert("Message envoyé avec succès");
+        setDisplayMessage(e, projectId);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <div className='project-container'>
@@ -192,9 +206,9 @@ function Project() {
                                   <p>Ce projet n'a pas de messages</p> 
                                 )} 
                             </div>
-                            <form className='message_form'>
-                              <input type='text' placeholder='Nouveau Message'></input>
-                              <button type='button'>Envoyer</button>
+                            <form className='message_form' onSubmit={(e) => newMessage(e, selectedProject.id)}>
+                              <input type='text' placeholder='Nouveau Message' onChange={(e) => contentChange(e)}></input>
+                              <button>Envoyer</button>
                             </form>
                             </>
                           ) : (

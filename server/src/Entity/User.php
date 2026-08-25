@@ -28,7 +28,7 @@ use ArrayObject;
                 requestBody: new Model\RequestBody(
                     content: new \ArrayObject(
                         [
-                            'multipart/form-data' => [
+                            'application/json' => [
                                 'schema' => [
                                     'type' => 'object',
                                     'properties' => [
@@ -54,7 +54,7 @@ use ArrayObject;
             openapi: new Model\Operation(
                 requestBody: new Model\RequestBody(
                     content: new ArrayObject([
-                        'multipart/form-data' => [
+                        'application/json' => [
                             'schema' => [
                                 'type' => 'object',
                                 'properties' => [

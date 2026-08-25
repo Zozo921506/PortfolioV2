@@ -20,9 +20,9 @@ final class UserController extends AbstractController
     #[Route('/api/login', methods:['POST'])]
     public function login(Request $request, JWTTokenManagerInterface $jwtManager, UserProviderInterface $userProvider, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
-
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
         $email = trim($email);
         $password = trim($password);
 
@@ -61,10 +61,11 @@ final class UserController extends AbstractController
     #[Route('/api/register', methods:['POST'])]
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entity): JsonResponse
     {
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
-        $firstname = $request->request->get('firstname');
-        $lastname = $request->request->get('lastname');
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+        $firstname = $data['firstname'] ?? null;
+        $lastname = $data['lastname'] ?? null;
 
         $email = trim($email);
         $password = trim($password);

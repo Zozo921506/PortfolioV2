@@ -7,6 +7,9 @@ function Project() {
   const [errorApi, setErrorApi] = useState(false);
   const [detailsProject, setDetailsProject] = useState(true);
   const [messages, setMessages] = useState([]);
+  const [token, setToken] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -64,6 +67,11 @@ function Project() {
         setSelectedProject(apiProjects[0]);
       }
     }
+
+    const storedToken = sessionStorage.getItem("token");
+    setToken(storedToken || "");
+    setIsLoggedIn(!!storedToken);
+
     if (!errorApi)
     {
       getProjects();
@@ -109,6 +117,24 @@ function Project() {
     setDetailsProject(true);
   }
 
+  // const newMessage = async (e, projectId) => {
+  //   e.preventDefault();
+  //   const url = `http://localhost:8000/api/new_message`;
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'POST', 
+  //       headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${token}`
+  //       },
+
+  //       // body: 
+  //     })
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
+
   return (
     <div className='project-container'>
         <div className='display-project'>
@@ -118,39 +144,14 @@ function Project() {
                 {selectedProject ? (
                 <>
                   <img src={selectedProject.imageURL} alt={selectedProject.name} className='selected-pic'></img>
-                  <div className="project-buttons">
-                    <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
-                    <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
-                  </div>
-                  {detailsProject ? (
-                    <>
-                      <h4>Titre: {selectedProject.name}</h4>
-                      <p><strong>Description:</strong> {selectedProject.description}</p>
-                      <div className='project-languages'>
-                        <p><strong>Langages: </strong></p>
-                        {selectedProject.languages.map((language) => (
-                          <p key={language}>{language}</p>
-                        ))}
-                      </div>
-                    </> 
-                  ) : (
-                    <>
-                      <div className="messages-container"> 
-                        {messages.length > 0 ? ( messages.map((message) => ( 
-                          <div className="message" key={message.id}> 
-                            <p><strong>{message.firstname} {message.lastname}</strong></p> 
-                            <p>{message.text}</p> 
-                          </div>
-                        )) ) : ( 
-                          <p>Ce projet n'a pas de messages</p> 
-                        )} 
-                      </div>
-                      <form>
-                        <input type='text' placeholder='Nouveau Meassage'></input>
-                        <button type='submit'>Envoyer</button>
-                      </form>
-                    </>
-                  )}
+                    <h4>Titre: {selectedProject.name}</h4>
+                    <p><strong>Description:</strong> {selectedProject.description}</p>
+                    <div className='project-languages'>
+                      <p><strong>Langages: </strong></p>
+                      {selectedProject.languages.map((language) => (
+                        <p key={language}>{language}</p>
+                      ))}
+                    </div>
                 </>
               ) : (
                 <p>Sélectionnez un projet pour voir les détails</p>
@@ -179,22 +180,30 @@ function Project() {
                       </>
                     ) : (
                       <>
-                        <div className="messages-container"> 
-                          {messages.length > 0 ? ( messages.map((message) => ( 
-                            <div className="message" key={message.id}> 
-                              <p><strong>{message.firstname} {message.lastname}</strong></p> 
-                              <p>{message.text}</p> 
+                        {isLoggedIn ? (
+                            <>
+                              <div className="messages-container"> 
+                                {messages.length > 0 ? ( messages.map((message) => ( 
+                                  <div className="message" key={message.id}> 
+                                    <p><strong>{message.firstname} {message.lastname}</strong></p> 
+                                    <p>{message.text}</p> 
+                                  </div>
+                                )) ) : ( 
+                                  <p>Ce projet n'a pas de messages</p> 
+                                )} 
                             </div>
-                          )) ) : ( 
-                            <p>Ce projet n'a pas de messages</p> 
-                          )} 
-                        </div>
-                        <form className='message_form'>
-                          <input type='text' placeholder='Nouveau Message'></input>
-                          <button type='button'>Envoyer</button>
-                        </form>
-                      </>
-                    )}
+                            <form className='message_form'>
+                              <input type='text' placeholder='Nouveau Message'></input>
+                              <button type='button'>Envoyer</button>
+                            </form>
+                            </>
+                          ) : (
+                            <>
+                              <p>Vous devez être connecté afin de pouvoir voir ou écrire un message</p>
+                            </>
+                          )}
+                    </>
+                  )}
                     
                   </>
                 ) : (

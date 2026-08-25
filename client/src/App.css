@@ -1,4 +1,4 @@
-body {
+body{
   background-color: black;
   color: white;
   margin: 0;
@@ -30,12 +30,12 @@ nav p {
 }
 
 #portfolio {
-  width: 175px;
-  height: 175px;
-  line-height: 175px;
+  width: 250px;
+  height: 250px;
+  line-height: 250px;
   border-radius: 50%;
   border: 10px solid white;
-  font-size: 25px;
+  font-size: 33px;
   color: #fff;
   text-align: center;
   background: #0068C9;
@@ -89,6 +89,7 @@ footer {
   display: flex;
   align-items: center;
   text-align: center;
+  z-index: 10;
 }
 
 footer button {
@@ -367,11 +368,11 @@ form div textarea {
     color: white;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .project-buttons button:hover {
     background-color: #00509b;
+    /* cursor: none; */
 }
 
 .messages-container {
@@ -427,11 +428,73 @@ form div textarea {
   background-color: #0068C9; 
   color: white; 
   font-weight: bold; 
-  cursor: pointer; 
 } 
 
 .message_form button:hover { 
   background-color: #00509b; 
+}
+
+h1 {
+  text-align: center;
+}
+
+.login_form_containter {
+  text-align: left;
+  margin-bottom: 85px;
+}
+
+.login_register_title {
+  margin-bottom: 30%;
+}
+
+.login_change_page {
+  border: none;
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  left: 19%;
+}
+
+.login_change_page:hover, .register_change_page:hover {
+  background-color: black;
+  color: #0068C9;
+}
+
+.login_button {
+  width: 50%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 57%;
+  left: 25%;
+  padding: 10px;
+}
+
+.register_row_container {
+  display: block;
+  margin-bottom: 0px;
+}
+
+.register_form_container {
+  margin-bottom: 25px;
+}
+
+.register_change_page {
+  border: none;
+  background-color: black;
+  position: absolute;
+  bottom: 34%;
+  left: 19%;
+}
+
+.register_button {
+  width: 50%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  bottom: 26%;
+  left: 25%;
+  padding: 10px;
 }
 
 @keyframes circleExpand {
@@ -520,10 +583,10 @@ form div textarea {
   }
 
   #portfolio {
-    width: 375px;
-    height: 375px;
-    line-height: 375px;
-    font-size: 47px;
+    width: 500px;
+    height: 500px;
+    line-height: 500px;
+    font-size: 70px;
     border: 12px solid white;
   }
 
@@ -581,7 +644,6 @@ form div textarea {
   }
 
   .profile-container,
-  .contact-container,
   .project-container {
     padding-bottom: 60px;
   }
@@ -634,6 +696,52 @@ form div textarea {
     width: 384px;
     font-size: 18px;
   }
+
+  .login_change_page {
+    top: 49%;
+    left: 19.5%;
+    font-size: 16px;
+  }
+
+  .login_button {
+    top: 59%;
+    padding: 17px;
+    font-size: 18px;
+    width: 20%;
+    left: 40%;
+  }
+
+  .login_register_label {
+    font-size: 20px;
+  }
+
+  .register_row_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 95px;
+  }
+
+  .register_form {
+    margin: 0;
+  }
+
+  .register_form_container {
+    margin-bottom: 25px;
+    width: 300px;
+  }
+
+  .register_change_page {
+    bottom: 47%;
+    left: 8.5%;
+    font-size: 16px;
+  }
+
+  .register_button {
+    bottom: 34%;
+    padding: 17px;
+    font-size: 18px;
+  }
 }
 
 @media screen and (min-width: 1024px) and (min-height: 768px) {
@@ -648,10 +756,6 @@ form div textarea {
   #searchbar {
     width: 513px;
   }
-
-  * {
-    cursor: none;
-  }
 }
 
 @media screen and (min-width: 1024px) and (min-height: 800px) {
@@ -664,10 +768,10 @@ form div textarea {
   }
 
   #portfolio {
-    width: 475px;
-    height: 475px;
-    line-height: 475px;
-    font-size: 50px;
+    width: 690px;
+    height: 690px;
+    line-height: 690px;
+    font-size: 80px;
     border: 15px solid white;
   }
 
@@ -748,7 +852,6 @@ form div textarea {
   }
 
   .profile-container,
-  .contact-container,
   .project-container {
     padding-bottom: 200px;
   }
@@ -786,5 +889,47 @@ form div textarea {
     width: 790px;
     font-size: 19px;
     top: 17px;
+  }
+
+  .login_register_title {
+    margin-bottom: 7%;
+  }
+
+  .login_change_page {
+    top: 46%;
+    left: 19.7%;
+    font-size: 18px;
+  }
+
+  .login_register_label {
+    font-size: 22px;
+  }
+
+  .login_button {
+    top: 55%;
+    padding: 17px;
+    font-size: 22px;
+    width: 15%;
+    left: 42.5%;
+  }
+
+  .login_form, .register_form {
+    margin-bottom: 20%;
+  }
+
+  .register_form_container {
+    width: 500px;
+  }
+
+  .register_change_page {
+    bottom: 50%;
+    left: 14.5%;
+  }
+
+  .register_button {
+    padding: 17px;
+    font-size: 22px;
+    width: 15%;
+    left: 42%;
   }
 }

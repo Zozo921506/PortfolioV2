@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from "./config.js";
 
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +46,7 @@ function Contact() {
     setIsSubmitting(true);
     setLastSubmitTime(now);
 
-    const url = "https://vps-48914820.vps.ovh.net/api/mail";
+    const url = `${config.apiUrl}.vps.ovh.net/api/mail`;
     try {
       const response = await fetch(url, {
         method: 'POST',

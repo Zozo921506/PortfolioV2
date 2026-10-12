@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from "./config.js";
 
 function Project() {
   const [displayProjects, setDisplayProjects] = useState([]);
@@ -42,7 +43,7 @@ function Project() {
     ];
 
     const getProjects = async() => {
-      const url = "http://localhost:8000/api/projects";
+      const url = `${config.apiUrl}/api/projects`;
       try
       {
         const response = await fetch(url, {
@@ -91,7 +92,7 @@ function Project() {
 
   const setDisplayMessage = async (e, projectId) => {
     e.preventDefault();
-    const url =`http://localhost:8000/api/getProjectMessage/${projectId}`;
+    const url =`${config.apiUrl}/api/getProjectMessage/${projectId}`;
     try {
       const response = await fetch(url, {
           method: 'GET'
@@ -124,7 +125,7 @@ function Project() {
 
   const newMessage = async (e, projectId) => {
     e.preventDefault();
-    const url = `http://localhost:8000/api/new_message`;
+    const url = `${config.apiUrl}/api/new_message`;
     try {
       const response = await fetch(url, {
         method: 'POST', 
@@ -174,7 +175,7 @@ function Project() {
                 <>
                   {selectedProject ? (
                   <>
-                    <img src={`https://vps-48914820.vps.ovh.net${selectedProject.imageUrl}`} alt={selectedProject.name} className='selected-pic'></img>
+                    <img src={`${config.apiUrl}/${selectedProject.imageUrl}`} alt={selectedProject.name} className='selected-pic'></img>
                     <div className="project-buttons">
                       <button onClick={(e) => setDisplayDetailsToTrue(e)}>Détails</button>
                       <button onClick={(e) => setDisplayMessage(e, selectedProject.id)}>Message</button>
@@ -281,7 +282,7 @@ function Project() {
                         <>
                           {filteredProjects.map((project) => {
                             return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
-                              <img src={`https://vps-48914820.vps.ovh.net${project.imageUrl}`} alt={project.name} className='project-pic'></img>
+                              <img src={`${config.apiUrl}/${project.imageUrl}`} alt={project.name} className='project-pic'></img>
                               <div className='project-value'>
                                   <p className='project-name'>{project.name}</p>
                                   <div className='project-languages'>
@@ -302,7 +303,7 @@ function Project() {
                     <>
                       {displayProjects ? displayProjects.map((project) => {
                       return <div key={project.id} className='project' onClick={() => setChangeProject(project)}>
-                          <img src={`https://vps-48914820.vps.ovh.net${project.imageUrl}`} alt={project.name} className='project-pic'></img>
+                          <img src={`${config.apiUrl}/${project.imageUrl}`} alt={project.name} className='project-pic'></img>
                           <div className='project-value'>
                               <p className='project-name'>{project.name}</p>
                               <div className='project-languages'>

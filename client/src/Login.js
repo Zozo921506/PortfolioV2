@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from "./config.js";
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ function Login() {
 
     const getLogged = async (e) => {
         e.preventDefault();
-        const url = "http://localhost:8000/api/login";
+        const url = `${config.apiUrl}/api/login`;
         try 
         {
             const response = await fetch(url, {
@@ -46,7 +47,7 @@ function Login() {
 
     const register = async (e) => {
         e.preventDefault();
-        const url = "http://localhost:8000/api/register";
+        const url = `${config.apiUrl}/api/register`;
         try {
             const response = await fetch(url, {
                 method: 'POST',

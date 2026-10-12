@@ -24,7 +24,7 @@ final class ProjectsController extends AbstractController
         $project = new Projects();
         $project->setName($request->request->get('name'));
         $project->setDescription($request->request->get('description'));
-        $project->setLanguages(json_decode($request->request->get('languages'), true));
+        $project->setLanguages(explode(',', $request->request->get('languages')));
         $file = $request->files->get('file');
         $file = $request->files->get('file');
         if (!$file) {

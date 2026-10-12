@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Projects;
 use App\Repository\ProjectsRepository;
-use Vich\UploaderBundle\Handler\UploadHandler;
+use App\Service\ProjectUploadHandlerInterface;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
@@ -18,7 +18,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 final class ProjectsController extends AbstractController
 {
     #[Route('/api/projects', methods: ['POST'])]
-    public function upload(Request $request, EntityManagerInterface $entity, UploadHandler $uploadHandler): Response
+    public function upload(Request $request, EntityManagerInterface $entity, ProjectUploadHandlerInterface $uploadHandler): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $project = new Projects();
@@ -61,7 +61,7 @@ final class ProjectsController extends AbstractController
     }
 
     #[Route('/api/projects/{id}', methods: ['PUT', 'POST'])]
-    public function updateProject(Request $request, EntityManagerInterface $entity, UploadHandler $uploadHandler, $id, JWTTokenManagerInterface $jwtManager): Response
+    public function updateProject(Request $request, EntityManagerInterface $entity, ProjectUploadHandlerInterface $uploadHandler, $id, JWTTokenManagerInterface $jwtManager): Response
     {
         $token = $request->headers->get('Authorization');
         if (!$token) 

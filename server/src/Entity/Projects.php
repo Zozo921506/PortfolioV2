@@ -6,12 +6,14 @@ use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute\Uploadable;
+use Vich\UploaderBundle\Mapping\Attribute\UploadableField;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Controller\ProjectsController;
 use ApiPlatform\OpenApi\Model;
 use ArrayObject;
@@ -57,7 +59,7 @@ use ArrayObject;
                 )
             )
         ),
-        new Post(
+        new Put(
             security: "is_granted('ROLE_ADMIN')",
             uriTemplate: '/projects/{id}',
             controller: ProjectsController::class. '::updateProject',
@@ -92,7 +94,7 @@ use ArrayObject;
         new Delete(security: "is_granted('ROLE_ADMIN')")
     ]
 )]
-#[Vich\Uploadable]
+#[Uploadable]
 class Projects
 {
     #[ORM\Id]
@@ -109,7 +111,7 @@ class Projects
     #[Groups(['project:read', 'project:write'])]
     private ?string $imagePath = null;
 
-    #[Vich\UploadableField(mapping: 'projects', fileNameProperty: 'imagePath')]
+    #[UploadableField(mapping: 'projects', fileNameProperty: 'imagePath')]
     #[Groups(['project:write'])]
     #[Assert\File(
         maxSize: '2M',
@@ -122,9 +124,10 @@ class Projects
     #[Groups(['project:read', 'project:write'])]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'array')]
+    #[ORM\Column(type: 'json')]
     #[Groups(['project:read', 'project:write'])]
-    private ?array $languages = [];
+    private array $languages = [];
+
 
     #[ORM\Column(options: ["default" => "CURRENT_TIMESTAMP"])]
     #[SerializedName('created_at')]
@@ -193,13 +196,14 @@ class Projects
 
     public function setLanguages(?array $languages): void
     {
-        $this->languages = $languages;
+        $this->languages = $languages ?? [];
     }
 
-    public function getLanguages(): ?array
+    public function getLanguages(): array
     {
         return $this->languages;
     }
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

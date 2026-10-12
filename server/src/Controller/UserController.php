@@ -21,19 +21,38 @@ final class UserController extends AbstractController
     public function login(Request $request, JWTTokenManagerInterface $jwtManager, UserProviderInterface $userProvider, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            return new JsonResponse(
+                ['error' => 'Invalid JSON'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
+
+        if (!is_string($email) || !is_string($password)) 
+        {
+            return new JsonResponse(['error' => 'Required fields must be strings'], Response::HTTP_BAD_REQUEST);
+        }
+
         $email = trim($email);
         $password = trim($password);
 
-        if (!isset($email) || !isset($password))
-        {
-            return new JsonResponse(['error' => 'Email and password are required'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return new JsonResponse(['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST);
-        }
+        if ($email === '') 
+        { 
+            return new JsonResponse( ['error' => 'Email is required'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        { 
+            return new JsonResponse( ['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if ($password === '') 
+        { 
+            return new JsonResponse( ['error' => 'Password is required'], Response::HTTP_BAD_REQUEST ); 
+        } 
 
         try
         {
@@ -62,47 +81,70 @@ final class UserController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entity): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+
+        if (!is_array($data)) {
+            return new JsonResponse(
+                ['error' => 'Invalid JSON'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
         $firstname = $data['firstname'] ?? null;
         $lastname = $data['lastname'] ?? null;
+
+        if (!is_string($email) || !is_string($password) || !is_string($firstname) || !is_string($lastname)) 
+        {
+            return new JsonResponse(['error' => 'Required fields must be strings'], Response::HTTP_BAD_REQUEST);
+        }
 
         $email = trim($email);
         $password = trim($password);
         $firstname = trim($firstname);
         $lastname = trim($lastname);
 
-        if(!isset($email) || $email === '')
-        {
-            return new JsonResponse(['error' => 'Email is required'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return new JsonResponse(['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if(!isset($password) || $password === '') {
-            return new JsonResponse(['error' => 'Password is required'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if(!isset($firstname) || $firstname === '') {
-            return new JsonResponse(['error' => 'Firstname is required'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if(!isset($lastname) || $lastname === '') {
-            return new JsonResponse(['error' => 'Lastname is required'], Response::HTTP_BAD_REQUEST);
+        if ($email === '') 
+        { 
+            return new JsonResponse( ['error' => 'Email is required'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        { 
+            return new JsonResponse( ['error' => 'Format invalid'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if ($password === '') 
+        { 
+            return new JsonResponse( ['error' => 'Password is required'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if ($firstname === '') 
+        { 
+            return new JsonResponse( ['error' => 'Firstname is required'], Response::HTTP_BAD_REQUEST ); 
+        } 
+        
+        if ($lastname === '') 
+        { 
+            return new JsonResponse( ['error' => 'Lastname is required'], Response::HTTP_BAD_REQUEST ); 
         }
 
         $user = new User();
         // return new JsonResponse(['test' => $user->getId()]);
+        $adminMail = $this->getParameter('app.ADMIN_MAIL');
         $user->setEmail($email);
-        $user->setRoles(['ROLE_USER']);
+        if ($email === $adminMail) 
+        {
+            $user->setRoles(['ROLE_ADMIN']);
+        } else {
+            $user->setRoles(['ROLE_USER']);
+        }
+
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
         $user->setPassword($passwordHasher->hashPassword($user, $password));
         $entity->persist($user);
         $entity->flush();
-
         return new JsonResponse(['message' => 'User created'], Response::HTTP_CREATED);
     }
 }

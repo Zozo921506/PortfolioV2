@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\ParameterType;
 
 /**
  * @extends ServiceEntityRepository<Message>
@@ -35,8 +36,9 @@ class MessageRepository extends ServiceEntityRepository
     {
         $connect = $this->getEntityManager()->getConnection();
         $query = "SELECT message.id, user.firstname, user.lastname, message.text FROM message LEFT OUTER JOIN user ON user.id = message.id_user WHERE message.id_project = ?";
-        $prepare = $connect->prepare($query);
-        $result = $prepare->executeQuery([$projectId]);
+        $stmt = $connect->prepare($query);
+        $stmt->bindValue(1, $projectId, ParameterType::INTEGER);
+        $result = $stmt->executeQuery();
         return $result->fetchAllAssociative();
     }
 }

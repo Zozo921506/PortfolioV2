@@ -46,7 +46,7 @@ function Contact() {
     setIsSubmitting(true);
     setLastSubmitTime(now);
 
-    const url = `${config.apiUrl}.vps.ovh.net/api/mail`;
+    const url = `${config.apiUrl}/api/mail`;
     try {
       const response = await fetch(url, {
         method: 'POST',

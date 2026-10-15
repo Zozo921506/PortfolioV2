@@ -1,4 +1,5 @@
 api_platform:
+    asset_package: 'api_platform'
     show_webby: false
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']

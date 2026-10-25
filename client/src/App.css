@@ -541,7 +541,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 600px) and (min-height: 300px) {
+@media screen and (min-width: 600px) {
   #accueil {
     width: 250px;
   }
@@ -573,7 +573,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 768px) and (min-height: 768px) {
+@media screen and (min-width: 768px) {
   nav {
     margin-bottom: 30%;
   }
@@ -583,9 +583,9 @@ h1 {
   }
 
   #portfolio {
-    width: 500px;
-    height: 500px;
-    line-height: 500px;
+    width: 480px;
+    height: 480px;
+    line-height: 480px;
     font-size: 70px;
     border: 12px solid white;
   }
@@ -744,7 +744,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1024px) and (min-height: 768px) {
+@media screen and (min-width: 1024px){
   #accueil {
     width: 275px;
   }
@@ -753,12 +753,6 @@ h1 {
     width: 120px;
   }
 
-  #searchbar {
-    width: 513px;
-  }
-}
-
-@media screen and (min-width: 1024px) and (min-height: 800px) {
   nav {
     margin-bottom: 5%;
   }
@@ -768,9 +762,9 @@ h1 {
   }
 
   #portfolio {
-    width: 690px;
-    height: 690px;
-    line-height: 690px;
+    width: 625px;
+    height: 625px;
+    line-height: 625px;
     font-size: 80px;
     border: 15px solid white;
   }
@@ -782,7 +776,7 @@ h1 {
   }
 
   .mainscreen_button {
-    margin-left: -70px;
+    margin-left: -85px;
   }
 
   #mainscreen-image {
@@ -860,10 +854,6 @@ h1 {
     background-color: #00509b;
   }
 
-  .selected-pic {
-    height: 275px;
-  }
-
   .project-details {
     width: 35%;
   }
@@ -932,4 +922,21 @@ h1 {
     width: 15%;
     left: 42%;
   }
+}
+
+@media screen and (min-width: 1024px) and (min-height: 800px) {
+  
+}
+
+@media screen and (min-width: 1500px){
+  .login_button {
+    top: 63%;
+    left: 42.5%;
+  }
+
+  .login_change_page {
+    top: 55%;
+    left: 19.7%;
+  }
+  
 }

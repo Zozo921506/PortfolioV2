@@ -37,32 +37,41 @@ function Contact() {
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    const now = new Date().getTime();
+    const now = Date.now();
+
     if (lastSubmitTime && now - lastSubmitTime < 60000) {
       alert("Veuillez attendre avant de renvoyer un message.");
       return;
     }
 
     setIsSubmitting(true);
-    setLastSubmitTime(now);
 
-    const url = `${config.apiUrl}/api/mail`;
     try {
-      const response = await fetch(url, {
+      const response = await fetch(`${config.apiUrl}/api/mail`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        alert("Email envoyé");
-        setIsSubmitting(false);
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        console.error('Erreur API :', response.status, data);
+        alert(data?.error || `Erreur serveur : ${response.status}`);
+        return;
       }
-      else {
-        console.log("Une erreur est survenue");
-      }
-    }
-    catch (e) {
-      console.error(e);
+
+      setLastSubmitTime(Date.now());
+      setFormData({ from: '', subject: '', message: '' });
+      alert('Email envoyé.');
+    } catch (error) {
+      console.error("Erreur réseau :", error);
+      alert("Impossible de contacter le serveur.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

@@ -93,7 +93,7 @@ footer {
 }
 
 footer button {
-  font-size: 13px;
+  font-size: 10px;
   height: 65px;
   width: 65px;
   border: 1px solid white;
@@ -599,7 +599,7 @@ h1 {
   footer button {
     width: 100px;
     height: 100px;
-    font-size: 25px;
+    font-size: 17px;
   }
 
   #accueil {

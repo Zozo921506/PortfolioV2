@@ -8,7 +8,7 @@ function Profile() {
         </div>
             <div className='profile-content'>
             <h3>Description</h3>
-            <p>Je suis Falla Enzo étudiant de deuxième année à la Web@cadémie by EPITECH et je suis à la recherche d'une alternance dans le domaine du développement web full stack pour une durée de 9 mois</p>
+            <p>Je suis Falla Enzo étudiant diplômé de la Web@cadémie by EPITECH. Je suis à la recherche d'un CDI pour un poste de développeur web fullstack.</p>
             <a href='./CV_Falla_Enzo.pdf' title='Téléchargement CV' download='CV_Falla_Enzo' id='resume'><strong>CV</strong></a>
         </div>
         <div className='profile-content'>
